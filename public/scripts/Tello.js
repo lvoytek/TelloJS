@@ -25,10 +25,41 @@
  * to associate GUI items with drone commands.
  */
 
+function connectDrone() {
+  let connectionStatus = activateDrone();
+
+  if (connectionStatus == 1) {
+    let connectButton = document.getElementById("connectDrone");
+    let commands = document.getElementById("droneCommands");
+    commands.style.display = "inline";
+    connectButton.style.display = "none";
+  } else if (connectionStatus == 0) {
+    alert("Connection failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
 function takeOff() {
-  alert("Take off!");
+  let success = takeoff();
+
+  if (success == 1) {
+    alert("Take off!");
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
 }
 
 function landDrone() {
-  alert("Landing");
+  let success = land();
+
+  if (success == 1) {
+    alert("Landing!");
+  } else if (success == 0) {
+    alert("Landing failed.");
+  } else {
+    alert("Drone not found.");
+  }
 }

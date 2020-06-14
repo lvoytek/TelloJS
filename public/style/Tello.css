@@ -23,3 +23,7 @@
 .button {
   background-color: greenyellow;
 }
+
+#droneCommands {
+  display: none;
+}

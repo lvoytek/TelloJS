@@ -26,15 +26,20 @@
     <title>Tello Drone Controller</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-	<link href="style/Tello.css" rel="stylesheet" type="text/css" />
-	<script src="scripts/jquery-3.5.1.min.js"></script>
+    <link href="style/Tello.css" rel="stylesheet" type="text/css" />
+    <script src="scripts/jquery-3.5.1.min.js"></script>
     <script src="scripts/CommandSender.js"></script>
     <script src="scripts/Tello.js" defer></script>
   </head>
 
   <body>
     <h1>Drone Controller</h1>
-    <div class="droneCommands">
+    <div id="connectDrone">
+      <button type="button" onClick="connectDrone()" class="button">
+        Connect Drone
+      </button>
+    </div>
+    <div id="droneCommands">
       <button type="button" onclick="takeOff()" class="button">
         Take off
       </button>
