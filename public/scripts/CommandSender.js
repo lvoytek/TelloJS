@@ -33,7 +33,9 @@
  */
 function sendPacket(command)
 {
-
+	$.get("http://localhost/dronecmd/run:3000", {cmd : command}, function (data, textStatus, jqXHR) {
+		return data.status;
+	});
 }
 
 /*
@@ -46,7 +48,14 @@ function sendPacket(command)
  */
 function activateDrone()
 {
+	let activateStatus = sendPacket("command");
 
+	if(activateStatus == "ok")
+		return 1;
+	else if(activateStatus == "unavailable")
+		return -1;
+	else
+		return 0;
 }
 
 /*
@@ -59,7 +68,14 @@ function activateDrone()
  */
 function takeoff()
 {
+	let activateStatus = sendPacket("takeoff");
 
+	if(activateStatus == "ok")
+		return 1;
+	else if(activateStatus == "unavailable")
+		return -1;
+	else
+		return 0;
 }
 
 /*
@@ -72,6 +88,13 @@ function takeoff()
  */
 function land()
 {
-    
+	let activateStatus = sendPacket("land");
+
+	if(activateStatus == "ok")
+		return 1;
+	else if(activateStatus == "unavailable")
+		return -1;
+	else
+		return 0;
 }
 
