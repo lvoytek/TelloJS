@@ -63,3 +63,69 @@ function landDrone() {
     alert("Drone not found.");
   }
 }
+
+function up() {
+  let success = flyUp(20);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function down() {
+  let success = flyDown(20);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function forward() {
+  let success = flyForward(20);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function back() {
+  let success = flyBackward(20);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function left() {
+  let success = flyLeft();
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function right() {
+  let success = flyRight(20);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
