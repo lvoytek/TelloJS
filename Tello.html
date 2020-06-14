@@ -20,19 +20,26 @@
 	SOFTWARE.
 -->
 
-
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Tello Drone Controller</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<link href="style/Tello.css" rel="stylesheet" type="text/css" />
-	<script src="scripts/CommandSender.js"></script>
-	<script src="scripts/Tello.js" defer></script>
-</head>
+  <head>
+    <title>Tello Drone Controller</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="style/Tello.css" rel="stylesheet" type="text/css" />
+    <script src="scripts/CommandSender.js"></script>
+    <script src="scripts/Tello.js" defer></script>
+  </head>
 
-<body>
-	<h1>Drone Controller</h1>
-</body>
+  <body>
+    <h1>Drone Controller</h1>
+    <div class="droneCommands">
+      <button type="button" onclick="takeOff()" class="button">
+        Take off
+      </button>
+      <button type="button" onclick="landDrone()" class="button">
+        Land
+      </button>
+    </div>
+  </body>
 </html>
