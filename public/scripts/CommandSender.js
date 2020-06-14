@@ -33,9 +33,11 @@
  */
 function sendPacket(command)
 {
-	$.get("http://localhost/dronecmd/run:3000", {cmd : command}, function (data, textStatus, jqXHR) {
+	$.get("http://localhost:3000/dronecmd/run", {cmd : command}, function (data, textStatus, jqXHR) {
 		return data.status;
 	});
+
+	return "ok";
 }
 
 /*
@@ -49,6 +51,8 @@ function sendPacket(command)
 function activateDrone()
 {
 	let activateStatus = sendPacket("command");
+
+	console.log(activateStatus);
 
 	if(activateStatus == "ok")
 		return 1;

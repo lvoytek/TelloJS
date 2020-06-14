@@ -28,8 +28,8 @@ var droneClient = dgram.createSocket('udp4');
 
 router.get('/run', function(req, res)
 {
-	console.log(req.header.cmd);
-	droneClient.send(req.header.cmd, 0, req.header.cmd.length, 8889, '192.168.10.1');
+	console.log(req.query.cmd);
+	droneClient.send(req.query.cmd, 0, req.query.cmd.length, 8889, '192.168.10.1');
 	res.status(200).json({status : "ok"});
 });
 
