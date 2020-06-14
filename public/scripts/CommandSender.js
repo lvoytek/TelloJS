@@ -52,14 +52,7 @@ function activateDrone()
 {
 	let activateStatus = sendPacket("command");
 
-	console.log(activateStatus);
-
-	if(activateStatus == "ok")
-		return 1;
-	else if(activateStatus == "unavailable")
-		return -1;
-	else
-		return 0;
+	return 1;
 }
 
 /*
@@ -74,12 +67,7 @@ function takeoff()
 {
 	let activateStatus = sendPacket("takeoff");
 
-	if(activateStatus == "ok")
-		return 1;
-	else if(activateStatus == "unavailable")
-		return -1;
-	else
-		return 0;
+	return 1;
 }
 
 /*
@@ -94,11 +82,235 @@ function land()
 {
 	let activateStatus = sendPacket("land");
 
-	if(activateStatus == "ok")
-		return 1;
-	else if(activateStatus == "unavailable")
-		return -1;
-	else
-		return 0;
+	return 1;
 }
 
+/*
+ * Attempts to turn on the UDP video stream
+ *
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function activateVideo()
+{
+	let activateStatus = sendPacket("streamon");
+	
+	return 1;
+}
+
+/*
+ * Attempts to turn off the UDP video stream
+ *
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function deactivateVideo()
+{
+	let activateStatus = sendPacket("streamoff");
+
+	return 1;
+}
+
+/*
+ * Activate emergency kill switch for all motors
+ *
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function kill()
+{
+	let activateStatus = sendPacket("emergency");
+
+	return 1;
+}
+
+/*
+ * Attempts to fly the drone upward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyUp(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("up " + integerDistance);
+
+	return 1;
+}
+
+/*
+ * Attempts to fly the drone downward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyDown(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("down " + integerDistance);
+
+	return 1;
+}
+
+/*
+ * Attempts to fly the drone leftward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyLeft(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("left " + integerDistance);
+
+	return 1;
+}
+
+
+/*
+ * Attempts to fly the drone rightward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyRight(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("right " + integerDistance);
+
+	return 1;
+}
+
+/*
+ * Attempts to fly the drone forward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyForward(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("forward " + integerDistance);
+
+	return 1;
+}
+
+/*
+ * Attempts to fly the drone backward by a given distance in cm
+ * Any integer amount from 20 to 500 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flyBackward(distance)
+{
+	integerDistance = Math.round(distance);
+
+	if(integerDistance < 20)
+		integerDistance = 20;
+	else if(integerDistance > 500)
+		integerDistance = 500;
+
+	let activateStatus = sendPacket("back " + integerDistance);
+
+	return 1;
+}
+
+/*
+ * Attempts to rotate the drone clockwise by a given number of degrees
+ * Any integer amount from 1 to 3600 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function rotateCW(degrees)
+{
+	integerDegrees = Math.round(degrees);
+
+	if(integerDegrees < 1)
+		integerDegrees = 1;
+	else if(integerDegrees > 3600)
+		integerDegrees = 3600;
+
+	let activateStatus = sendPacket("cw " + integerDegrees);
+
+	return 1;
+}
+
+/*
+ * Attempts to rotate the drone counter-clockwise by a given number of degrees
+ * Any integer amount from 1 to 3600 is valid
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function rotateCCW(degrees)
+{
+	integerDegrees = Math.round(degrees);
+
+	if(integerDegrees < 1)
+		integerDegrees = 1;
+	else if(integerDegrees > 3600)
+		integerDegrees = 3600;
+
+	let activateStatus = sendPacket("ccw " + integerDegrees);
+
+	return 1;
+}
