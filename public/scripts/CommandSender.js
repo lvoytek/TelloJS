@@ -141,7 +141,7 @@ function kill()
  */
 function flyUp(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -164,7 +164,7 @@ function flyUp(distance)
  */
 function flyDown(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -187,7 +187,7 @@ function flyDown(distance)
  */
 function flyLeft(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -211,7 +211,7 @@ function flyLeft(distance)
  */
 function flyRight(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -234,7 +234,7 @@ function flyRight(distance)
  */
 function flyForward(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -257,7 +257,7 @@ function flyForward(distance)
  */
 function flyBackward(distance)
 {
-	integerDistance = Math.round(distance);
+	let integerDistance = Math.round(distance);
 
 	if(integerDistance < 20)
 		integerDistance = 20;
@@ -280,7 +280,7 @@ function flyBackward(distance)
  */
 function rotateCW(degrees)
 {
-	integerDegrees = Math.round(degrees);
+	let integerDegrees = Math.round(degrees);
 
 	if(integerDegrees < 1)
 		integerDegrees = 1;
@@ -303,7 +303,7 @@ function rotateCW(degrees)
  */
 function rotateCCW(degrees)
 {
-	integerDegrees = Math.round(degrees);
+	let integerDegrees = Math.round(degrees);
 
 	if(integerDegrees < 1)
 		integerDegrees = 1;
@@ -373,4 +373,32 @@ function flipRight(degrees)
 	let activateStatus = sendPacket("flip r");
 
 	return 1;
+}
+
+/*
+ * Use four channels to set active speeds in each direction
+ * Best used with joysticks or other hardware control interfaces
+ * Each channel takes in a relative integer value from -100 to 100
+ * Parameters:
+ * 	lr - left/right speed
+ *  bf - backward/forward speed
+ *  du - down/up speed
+ * 	yaw - ccw/cw speed
+ * 
+ * Does not return anything for speed, assumes this command is sent often enough
+ * to not care if it sometimes fails
+ */
+function activeChannelInterface(lr, bf, du, yaw)
+{
+	let intLR = Math.round(lr);
+	let intBF = Math.round(bf);
+	let intDU = Math.round(du);
+	let intYaw = Math.round(yaw);
+
+	intLR = Math.min(Math.max(-100, intLR), 100);
+	intBF = Math.min(Math.max(-100, intBF), 100);
+	intDU = Math.min(Math.max(-100, intDU), 100);
+	intYaw = Math.min(Math.max(-100, intYaw), 100);
+
+	sendPacket("rc " + intLR + " " + intBF + " " + intDU + " " + intYaw);
 }
