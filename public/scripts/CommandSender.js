@@ -314,3 +314,63 @@ function rotateCCW(degrees)
 
 	return 1;
 }
+
+/*
+ * Attempts to flip the drone forward
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flipForward(degrees)
+{
+	let activateStatus = sendPacket("flip f");
+
+	return 1;
+}
+
+/*
+ * Attempts to flip the drone backward
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flipBackward(degrees)
+{
+	let activateStatus = sendPacket("flip b");
+
+	return 1;
+}
+
+/*
+ * Attempts to flip the drone leftward
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flipLeft(degrees)
+{
+	let activateStatus = sendPacket("flip l");
+
+	return 1;
+}
+
+/*
+ * Attempts to flip the drone rightward
+ * 
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function flipRight(degrees)
+{
+	let activateStatus = sendPacket("flip r");
+
+	return 1;
+}
