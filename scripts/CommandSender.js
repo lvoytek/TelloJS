@@ -22,3 +22,56 @@
  * CommandSender.js
  * This file contains functions that send packets to the drone in order to control it. 
  */
+
+
+/*
+ * Base command sending function used by all other functions in this file
+ *
+ * returns:
+ *      "ok" on command success
+ *      Some error code or "error" on failure
+ */
+function sendPacket(command)
+{
+
+}
+
+/*
+ * Checks if drone is available on the network and if so has it enter SDK mode
+ * 
+ * returns:
+ *      1  on successful activation
+ *      0  on failure to set SDK mode
+ *      -1 on drone not available
+ */
+function activateDrone()
+{
+
+}
+
+/*
+ * Attempts a drone takeoff
+ *
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function takeoff()
+{
+
+}
+
+/*
+ * Attempts to land the drone
+ *
+ * returns:
+ *      1  on success
+ *      0  on command failure
+ *      -1 on drone not available
+ */
+function land()
+{
+    
+}
+
