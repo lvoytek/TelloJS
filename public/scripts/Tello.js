@@ -25,6 +25,79 @@
  * to associate GUI items with drone commands.
  */
 
+const refreshRate = 100;
+const output = document.getElementById("output");
+var droneControlMode = false;
+
+setInterval(controllerStart, refreshRate);
+
+function controllerStart() {
+  const gamepads = navigator.getGamepads();
+  const gamepad = gamepads[0];
+
+  // Escape if no gamepad was found
+  if (!gamepad) {
+    console.log("No gamepad found.");
+    return;
+  }
+
+  // Filter out only the buttons which are pressed
+  const pressedButtons = gamepad.buttons
+    .map((button, id) => ({ id, button }))
+    .filter(isPressed);
+
+  for (const button of pressedButtons) {
+    console.log(button);
+    if (droneControlMode === false && button.id == 9) {
+      connectDrone();
+      droneControlMode = true;
+    } else {
+      droneController(button.id);
+    }
+  }
+}
+
+function isPressed({ button: { pressed } }) {
+  return !!pressed;
+}
+
+function log(message) {
+  const date = new Date().toISOString();
+  output.innerHTML += `${date}: ${message}\n`;
+}
+
+function droneController(buttonID) {
+  switch (buttonID) {
+    case 0:
+      takeOff();
+      //log("Takeoff!");
+      break;
+    case 1:
+      landDrone();
+      //log("Landing.");
+      break;
+    case 5:
+      let on = document.getElementById("videoOn");
+      if (on.style.display == "none") {
+        videoOn();
+      } else {
+        videoOff();
+      }
+      break;
+
+    default:
+      //log(`Button ${buttonID} was pressed.`);
+      break;
+  }
+}
+/*
+
+
+Here's the drone command stuff. Hook it up later.
+
+
+
+*/
 function connectDrone() {
   let connectionStatus = activateDrone();
 
@@ -35,18 +108,6 @@ function connectDrone() {
     connectButton.style.display = "none";
   } else if (connectionStatus == 0) {
     alert("Connection failed.");
-  } else {
-    alert("Drone not found.");
-  }
-}
-
-function takeOff() {
-  let success = takeoff();
-
-  if (success == 1) {
-    alert("Take off!");
-  } else if (success == 0) {
-    alert("Take off failed.");
   } else {
     alert("Drone not found.");
   }
@@ -84,11 +145,21 @@ function videoOff() {
   }
 }
 
+function takeOff() {
+  let success = takeoff();
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Take off failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
 function landDrone() {
   let success = land();
 
   if (success == 1) {
-    alert("Landing!");
   } else if (success == 0) {
     alert("Landing failed.");
   } else {

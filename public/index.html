@@ -35,16 +35,20 @@
   <body>
     <h1>Drone Controller</h1>
     <div id="connectDrone">
-      <button type="button" onClick="connectDrone()" class="button">
-        Connect Drone
+      <button type="button" class="button">
+        Press Start To Connect Drone
       </button>
     </div>
     <div id="droneCommands">
+      <h2>Drone Commands:</h2>
+      <pre id="output"></pre>
+
+      <br />
       <button type="button" class="button" id="videoOn" onclick="videoOn()">
-        Turn on video streaming
+        Turn on video streaming (R1)
       </button>
       <button type="button" class="button" id="videoOff" onclick="videoOff()">
-        Turn off video streaming
+        Turn off video streaming (R1)
       </button>
       <br />
       <button type="button" onclick="takeOff()" class="button">
