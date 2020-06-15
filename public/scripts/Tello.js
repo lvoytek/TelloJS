@@ -78,7 +78,7 @@ function droneController(buttonID) {
       break;
     case 5:
       let on = document.getElementById("videoOn");
-      if (on.style.display == "none") {
+      if (on.style.display == "inline") {
         videoOn();
       } else {
         videoOff();
