@@ -76,11 +76,16 @@ function droneController(buttonID) {
       landDrone();
       //log("Landing.");
       break;
-    case 5:
+    case 4:
       let on = document.getElementById("videoOn");
       if (on.style.display == "inline") {
         videoOn();
-      } else {
+      }
+      break;
+
+    case 5:
+      let on = document.getElementById("videoOn");
+      if (on.style.display == "break") {
         videoOff();
       }
       break;
