@@ -40,6 +40,13 @@
       </button>
     </div>
     <div id="droneCommands">
+      <button type="button" class="button" id="videoOn" onclick="videoOn()">
+        Turn on video streaming
+      </button>
+      <button type="button" class="button" id="videoOff" onclick="videoOff()">
+        Turn off video streaming
+      </button>
+      <br />
       <button type="button" onclick="takeOff()" class="button">
         Take off
       </button>
@@ -71,10 +78,10 @@
 
       <br />
 
-      <button type="button" onclick="takeOff()" class="button">
+      <button type="button" onclick="clockwise()" class="button">
         Rotate Clockwise
       </button>
-      <button type="button" onclick="takeOff()" class="button">
+      <button type="button" onclick="counterClockwise()" class="button">
         Rotate Counterclockwise
       </button>
     </div>

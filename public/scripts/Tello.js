@@ -52,6 +52,38 @@ function takeOff() {
   }
 }
 
+function videoOn() {
+  let success = activateVideo();
+
+  if (success == 1) {
+    let on = document.getElementById("videoOn");
+    let off = document.getElementById("videoOff");
+
+    on.style.display = "none";
+    off.style.display = "inline";
+  } else if (connectionStatus == 0) {
+    alert("Video failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function videoOff() {
+  let success = deactivateVideo();
+
+  if (success == 1) {
+    let on = document.getElementById("videoOn");
+    let off = document.getElementById("videoOff");
+
+    on.style.display = "inline";
+    off.style.display = "none";
+  } else if (connectionStatus == 0) {
+    alert("Video failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
 function landDrone() {
   let success = land();
 
@@ -69,7 +101,7 @@ function up() {
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Up failed.");
   } else {
     alert("Drone not found.");
   }
@@ -80,7 +112,7 @@ function down() {
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Down failed.");
   } else {
     alert("Drone not found.");
   }
@@ -91,7 +123,7 @@ function forward() {
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Forward failed.");
   } else {
     alert("Drone not found.");
   }
@@ -102,18 +134,18 @@ function back() {
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Back failed.");
   } else {
     alert("Drone not found.");
   }
 }
 
 function left() {
-  let success = flyLeft();
+  let success = flyLeft(20);
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Left failed.");
   } else {
     alert("Drone not found.");
   }
@@ -124,7 +156,29 @@ function right() {
 
   if (success == 1) {
   } else if (success == 0) {
-    alert("Take off failed.");
+    alert("Right failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function clockwise() {
+  let success = rotateCW(10);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Clockwise rotation failed.");
+  } else {
+    alert("Drone not found.");
+  }
+}
+
+function counterClockwise() {
+  let success = rotateCCW(10);
+
+  if (success == 1) {
+  } else if (success == 0) {
+    alert("Counter clockwise rotation failed.");
   } else {
     alert("Drone not found.");
   }
