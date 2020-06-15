@@ -25,6 +25,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var webSocket = require('ws');
+var http = require('http');
+
+const spawn = require('child_process').spawn;
 
 var droneCmdRouter = require('./routes/dronecmd');
 
@@ -57,6 +61,49 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/dronecmd', droneCmdRouter);
 
+
+const videoStreamServer = http.createServer(function(req, res)
+{
+	req.on('data', function(data)
+	{
+		webSocketServer.broadcast(data);
+	});
+}).listen(3001);
+
+const webSocketServer = new webSocket.Server(
+{
+	server : videoStreamServer
+});
+
+webSocketServer.broadcast = function(data)
+{
+	webSocketServer.clients.forEach(function each(client)
+	{
+		if(client.readyState === webSocket.OPEN)
+			client.send(data);
+	});
+};
+
+setTimeout(function()
+{
+	var args = [
+		"-i", "udp://0.0.0.0:11111",
+		"-r", "30",
+		"-s", "960x720",
+		"-codec:v", "mpeg1video",
+		"-b", "800k",
+		"-f", "mpegts",
+		"http://127.0.0.1:3001/stream"
+	];
+
+	// Spawn an ffmpeg instance
+	var streamer = spawn('ffmpeg', args);
+	
+	streamer.on("exit", function(code)
+	{
+		console.log("Failure", code);
+	});
+}, 3000);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
