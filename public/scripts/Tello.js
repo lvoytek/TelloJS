@@ -89,6 +89,12 @@ $(document).ready(function () {
           videoOff();
         }
         break;
+      case 6:
+        console.log("Counterclockwise :)");
+        break;
+      case 7:
+        console.log("Clockwise :)");
+        break;
       default:
         //log(`Button ${buttonID} was pressed.`);
         break;
