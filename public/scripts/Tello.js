@@ -30,77 +30,82 @@ var droneControlMode = false;
 var videoMode = false;
 
 $(document).ready(function () {
-  const output = $("#output");
+	setInterval(controllerStart, refreshRate);
 
-  setInterval(controllerStart, refreshRate);
+	function controllerStart() {
+		const gamepads = navigator.getGamepads();
+		const gamepad = gamepads[0];
 
-  function controllerStart() {
-    const gamepads = navigator.getGamepads();
-    const gamepad = gamepads[0];
+		// Escape if no gamepad was found
+		if (!gamepad) {
+			console.log("No gamepad found.");
+			return;
+		}
 
-    // Escape if no gamepad was found
-    if (!gamepad) {
-      console.log("No gamepad found.");
-      return;
-    }
+		// Filter out only the buttons which are pressed
+		const pressedButtons = gamepad.buttons
+			.map((button, id) => ({ id, button }))
+			.filter(isPressed);
 
-    // Filter out only the buttons which are pressed
-    const pressedButtons = gamepad.buttons
-      .map((button, id) => ({ id, button }))
-      .filter(isPressed);
+		for (const button of pressedButtons) {
+			console.log(button);
+			if (droneControlMode === false && button.id == 9) {
+				connectDrone();
+				droneControlMode = true;
+			} else {
+				droneController(button.id);
+			}
+		}
+	}
 
-    for (const button of pressedButtons) {
-      console.log(button);
-      if (droneControlMode === false && button.id == 9) {
-        connectDrone();
-        droneControlMode = true;
-      } else {
-        droneController(button.id);
-      }
-    }
-  }
+	function isPressed({ button: { pressed } }) {
+		return !!pressed;
+	}
 
-  function isPressed({ button: { pressed } }) {
-    return !!pressed;
-  }
+	function droneController(buttonID) {
+		let on = null;
 
-  function log(message) {
-    const date = new Date().toISOString();
-    output.innerHTML += `${date}: ${message}\n`;
-  }
-
-  function droneController(buttonID) {
-    let on = null;
-
-    switch (buttonID) {
-      case 0:
-        takeOff();
-        break;
-      case 1:
-        landDrone();
-        break;
-      case 4:
-        if (videoMode === false) {
-          videoOn();
-        }
-        break;
-      case 5:
-        if (videoMode === true) {
-          videoOff();
-        }
-        break;
-      case 6:
-        console.log("Counterclockwise :)");
-        break;
-      case 7:
-        console.log("Clockwise :)");
-        break;
-      default:
-        //log(`Button ${buttonID} was pressed.`);
-        break;
-    }
-  }
-  /*
+		switch (buttonID) {
+			case 0:
+				takeOff();
+				break;
+			case 1:
+				landDrone();
+				break;
+			case 4:
+				if (videoMode === false) {
+					videoOn();
+				}
+				break;
+			case 5:
+				if (videoMode === true) {
+					videoOff();
+				}
+				break;
+			case 6:
+				console.log("Counterclockwise :)");
+				break;
+			case 7:
+				console.log("Clockwise :)");
+				break;
+			case 12:
+				flipForward();
+				break;
+			case 13:
+				flipBackward();
+				break;
+			case 14:
+				flipLeft();
+				break;
+			case 15:
+				flipRight();
+				break;
+			default:
+				//log(`Button ${buttonID} was pressed.`);
+				break;
+		}
+	}
+	/*
 
 
 	Here's the drone command stuff. Hook it up later.
@@ -108,164 +113,164 @@ $(document).ready(function () {
 
 
 	*/
-  function connectDrone() {
-    let connectionStatus = activateDrone();
+	function connectDrone() {
+		let connectionStatus = activateDrone();
 
-    if (connectionStatus == 1) {
-      let connectButton = document.getElementById("connectDrone");
-      let commands = document.getElementById("droneCommands");
-      commands.style.display = "inline";
-      connectButton.style.display = "none";
-    } else if (connectionStatus == 0) {
-      alert("Connection failed.");
-    } else {
-      alert("Drone not found.");
-    }
-  }
+		if (connectionStatus == 1) {
+			let connectButton = document.getElementById("connectDrone");
+			let commands = document.getElementById("droneCommands");
+			commands.style.display = "inline";
+			connectButton.style.display = "none";
+		} else if (connectionStatus == 0) {
+			alert("Connection failed.");
+		} else {
+			alert("Drone not found.");
+		}
+	}
 });
 
 function videoOn() {
-  let success = activateVideo();
+	let success = activateVideo();
 
-  if (success == 1) {
-    let on = document.getElementById("videoOn");
-    let off = document.getElementById("videoOff");
+	if (success == 1) {
+		let on = document.getElementById("videoOn");
+		let off = document.getElementById("videoOff");
 
-    on.style.display = "none";
-    off.style.display = "inline";
-  } else if (connectionStatus == 0) {
-    alert("Video failed.");
-  } else {
-    alert("Drone not found.");
-  }
+		on.style.display = "none";
+		off.style.display = "inline";
+	} else if (connectionStatus == 0) {
+		alert("Video failed.");
+	} else {
+		alert("Drone not found.");
+	}
 
-  videoMode = true;
+	videoMode = true;
 }
 
 function videoOff() {
-  let success = deactivateVideo();
+	let success = deactivateVideo();
 
-  if (success == 1) {
-    let on = document.getElementById("videoOn");
-    let off = document.getElementById("videoOff");
+	if (success == 1) {
+		let on = document.getElementById("videoOn");
+		let off = document.getElementById("videoOff");
 
-    on.style.display = "inline";
-    off.style.display = "none";
-  } else if (connectionStatus == 0) {
-    alert("Video failed.");
-  } else {
-    alert("Drone not found.");
-  }
+		on.style.display = "inline";
+		off.style.display = "none";
+	} else if (connectionStatus == 0) {
+		alert("Video failed.");
+	} else {
+		alert("Drone not found.");
+	}
 
-  videoMode = false;
+	videoMode = false;
 }
 
 function takeOff() {
-  let success = takeoff();
+	let success = takeoff();
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Take off failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Take off failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function landDrone() {
-  let success = land();
+	let success = land();
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Landing failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Landing failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function up() {
-  let success = flyUp(20);
+	let success = flyUp(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Up failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Up failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function down() {
-  let success = flyDown(20);
+	let success = flyDown(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Down failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Down failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function forward() {
-  let success = flyForward(20);
+	let success = flyForward(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Forward failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Forward failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function back() {
-  let success = flyBackward(20);
+	let success = flyBackward(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Back failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Back failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function left() {
-  let success = flyLeft(20);
+	let success = flyLeft(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Left failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Left failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function right() {
-  let success = flyRight(20);
+	let success = flyRight(20);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Right failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Right failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function clockwise() {
-  let success = rotateCW(10);
+	let success = rotateCW(10);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Clockwise rotation failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Clockwise rotation failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
 
 function counterClockwise() {
-  let success = rotateCCW(10);
+	let success = rotateCCW(10);
 
-  if (success == 1) {
-  } else if (success == 0) {
-    alert("Counter clockwise rotation failed.");
-  } else {
-    alert("Drone not found.");
-  }
+	if (success == 1) {
+	} else if (success == 0) {
+		alert("Counter clockwise rotation failed.");
+	} else {
+		alert("Drone not found.");
+	}
 }
