@@ -59,10 +59,9 @@ $(document).ready(function () {
 
 		if(droneControlMode)
 			sendCurrentControl(gamepad.axes);
-
-		for(let i = 0; i < gamepad.axes.length; i++)
-			console.log(i, gamepad.axes[i]);
 	}
+
+	var prevAxisVals = [0, 0, 0, 0];
 
 	//Modify gamepad axes input to get reasonable values for sending to drone
 	function sendCurrentControl(axes)
@@ -72,7 +71,11 @@ $(document).ready(function () {
 		yawVal = axes[2] * 100;
 		duVal = axes[3] * -100;
 
-		activeChannelInterface(lrVal, bfVal, duVal, yawVal);
+		if(Math.abs(lrVal - prevAxisVals[0]) > 2 || Math.abs(bfVal - prevAxisVals[1]) > 2 || Math.abs(yawVal - prevAxisVals[2]) > 2 || Math.abs(duVal - prevAxisVals[3]) > 2)
+		{
+			activeChannelInterface(lrVal, bfVal, duVal, yawVal);
+			prevAxisVals = [lrVal, bfVal, yawVal, duVal];
+		}
 	}
 
 	function isPressed({ button: { pressed } }) {
