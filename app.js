@@ -31,6 +31,7 @@ var http = require("http");
 const spawn = require("child_process").spawn;
 
 var droneCmdRouter = require("./routes/dronecmd");
+var droneStatusRouter = require("./routes/dronestatus");
 
 var app = express();
 
@@ -65,6 +66,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/dronecmd", droneCmdRouter);
+app.use("/dronestatus", droneStatusRouter);
 
 const videoStreamServer = http
   .createServer(function (req, res) {
