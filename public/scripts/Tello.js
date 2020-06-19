@@ -121,17 +121,11 @@ $(document).ready(function () {
 				flipRight();
 				break;
 			default:
-				//log(`Button ${buttonID} was pressed.`);
 				break;
 		}
 	}
 	/*
-
-
-	Here's the drone command stuff. Hook it up later.
-
-
-
+	Here's the drone command stuff. 
 	*/
 	function connectDrone() {
 		let connectionStatus = activateDrone();
