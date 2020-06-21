@@ -110,8 +110,6 @@ setTimeout(function () {
     ? spawn("ffmpeg.exe", args, { shell: true })
     : spawn("ffmpeg", args);
 
-  streamer.stderr.pipe(process.stderr);
-
   streamer.on("exit", function (code) {
     console.log("Failure", code);
   });
