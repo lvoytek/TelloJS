@@ -28,8 +28,58 @@
 const refreshRate = 100;
 var droneControlMode = false;
 var videoMode = false;
+var browserName = ""
+
+const controllerMap = 
+{
+	"chrome" : 
+	{
+		"connect"	: 9,
+		"takeoff" 	: 0,
+		"land"		: 1,
+		"videoOn"	: 4,
+		"videoOff"	: 5,
+		"ccw"		: 6,
+		"cw"		: 7,
+		"flipf"		: 12,
+		"flipb"		: 13,
+		"flipl"		: 14,
+		"flipr"		: 15,
+		"axislr"	: 0,
+		"axisbf"	: 1,
+		"axisyaw"	: 2,
+		"axisdu"	: 3
+	},
+
+	"firefox" :
+	{
+		"connect"	: 7,
+		"takeoff" 	: 0,
+		"land"		: 1,
+		"videoOn"	: 4,
+		"videoOff"	: 5,
+		"ccw"		: 6,
+		"cw"		: 7,
+		"flipf"		: 12,
+		"flipb"		: 13,
+		"flipl"		: 14,
+		"flipr"		: 15,
+		"axislr"	: 0,
+		"axisbf"	: 1,
+		"axisyaw"	: 2,
+		"axisdu"	: 3 
+	},
+
+};
 
 $(document).ready(function () {
+	
+	if(navigator.userAgent.includes("Chromium") || navigator.userAgent.includes("Chrome"))
+		browserName = "chrome";
+	else if(navigator.userAgent.includes("Mozilla"))
+		browserName = "firefox";
+
+	navigator.userAgent
 	setInterval(controllerStart, refreshRate);
 
 	function controllerStart() {
@@ -49,7 +99,7 @@ $(document).ready(function () {
 
 		for (const button of pressedButtons) {
 			console.log(button);
-			if (droneControlMode === false && button.id == 9) {
+			if (droneControlMode === false && button.id == controllerMap[browserName].connect) {
 				connectDrone();
 				droneControlMode = true;
 			} else {
@@ -66,10 +116,10 @@ $(document).ready(function () {
 	//Modify gamepad axes input to get reasonable values for sending to drone
 	function sendCurrentControl(axes)
 	{
-		lrVal = axes[0] * 100;
-		bfVal = axes[1] * -100;
-		yawVal = axes[2] * 100;
-		duVal = axes[3] * -100;
+		lrVal = axes[controllerMap[browserName].axislr] * 100;
+		bfVal = axes[controllerMap[browserName].axisbf] * -100;
+		yawVal = axes[controllerMap[browserName].axisyaw] * 100;
+		duVal = axes[controllerMap[browserName].axisdu] * -100;
 
 		if(Math.abs(lrVal - prevAxisVals[0]) > 2 || Math.abs(bfVal - prevAxisVals[1]) > 2 || Math.abs(yawVal - prevAxisVals[2]) > 2 || Math.abs(duVal - prevAxisVals[3]) > 2)
 		{
@@ -86,38 +136,38 @@ $(document).ready(function () {
 		let on = null;
 
 		switch (buttonID) {
-			case 0:
+			case controllerMap[browserName].takeoff:
 				takeOff();
 				break;
-			case 1:
+			case controllerMap[browserName].land:
 				landDrone();
 				break;
-			case 4:
-				if (videoMode === false) {
+			case controllerMap[browserName].videoOn:
+				if (!videoMode) {
 					videoOn();
 				}
 				break;
-			case 5:
-				if (videoMode === true) {
+			case controllerMap[browserName].videoOff:
+				if (videoMode) {
 					videoOff();
 				}
 				break;
-			case 6:
-				console.log("Counterclockwise :)");
+			case controllerMap[browserName].ccw:
+				rotateCCW(30);
 				break;
-			case 7:
-				console.log("Clockwise :)");
+			case controllerMap[browserName].cw:
+				rotateCW(30);
 				break;
-			case 12:
+			case controllerMap[browserName].flipf:
 				flipForward();
 				break;
-			case 13:
+			case controllerMap[browserName].flipb:
 				flipBackward();
 				break;
-			case 14:
+			case controllerMap[browserName].flipl:
 				flipLeft();
 				break;
-			case 15:
+			case controllerMap[browserName].flipr:
 				flipRight();
 				break;
 			default:
@@ -146,15 +196,9 @@ $(document).ready(function () {
 function videoOn() {
 	let success = activateVideo();
 
-	if (success == 1) {
-		let on = document.getElementById("videoOn");
-		let off = document.getElementById("videoOff");
-
-		on.style.display = "none";
-		off.style.display = "inline";
-	} else if (connectionStatus == 0) {
+	if (success == 0) {
 		alert("Video failed.");
-	} else {
+	} else if(success == -1) {
 		alert("Drone not found.");
 	}
 
@@ -164,15 +208,9 @@ function videoOn() {
 function videoOff() {
 	let success = deactivateVideo();
 
-	if (success == 1) {
-		let on = document.getElementById("videoOn");
-		let off = document.getElementById("videoOff");
-
-		on.style.display = "inline";
-		off.style.display = "none";
-	} else if (connectionStatus == 0) {
+	if (success == 0) {
 		alert("Video failed.");
-	} else {
+	} else if (success == -1) {
 		alert("Drone not found.");
 	}
 
