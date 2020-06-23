@@ -1,12 +1,15 @@
 # TelloJS
+
 A Node-based [DJI Tello drone](https://store.dji.com/product/tello) controller that can be run in a browser
 
 ![Tello Drone](https://images-na.ssl-images-amazon.com/images/I/71Mu%2Bpnre8L._AC_SX466_.jpg)
 
 ## Installation:
+
 TelloJS is tested and works with NodeJS v10.16.3 and npm v6.9.0 on both Ubuntu 20.04 and Windows 10. It should work with other operating systems and new versions of node, but it has not yet been tested on them. The following installation instructions assume you have one of the two above operating systems.
 
 ### On Ubuntu
+
 First, download and extract this repository or clone it via git and change into that directory.
 
 ```shell
@@ -52,9 +55,11 @@ In a terminal or Git Bash instance go into the TelloJS repository folder and sta
 ```shell
 npm start
 ```
+
 Connect to the Tello Drone via Wifi.
 
-Then, in a Chrome or Chromium web browser, (controller layout varies in other web browsers,) go to [http://localhost:3000/](http://localhost:3000/). Plug in an XBox 360 controller (more controller support will be available in the future) and press start.
+Then, in a Chrome, Chromium or Firefox web browser, (controller layout varies in other web browsers,) go to [http://localhost:3000/](http://localhost:3000/). Plug in an XBox 360 controller (more controller support will be available in the future) and press start.
 
 ## Controls
+
 ![Controls](img/controller.png)
