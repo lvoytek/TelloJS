@@ -1,5 +1,7 @@
 # TelloJS
-A Node-based DJI Tello drone controller that can be run in a browser
+A Node-based [DJI Tello drone](https://store.dji.com/product/tello) controller that can be run in a browser
+
+![Tello Drone](https://images-na.ssl-images-amazon.com/images/I/71Mu%2Bpnre8L._AC_SX466_.jpg)
 
 ## Installation:
 TelloJS is tested and works with NodeJS v10.16.3 and npm v6.9.0 on both Ubuntu 20.04 and Windows 10. It should work with other operating systems and new versions of node, but it has not yet been tested on them. The following installation instructions assume you have one of the two above operating systems.
