@@ -48,6 +48,13 @@ Next, download the [Windows msi installer for NodeJS](https://nodejs.org/en/down
 
 ffmpeg.exe comes with this repo and therefore does not need to be installed to run video.
 
+## Installing Dependencies:
+In a terminal or Git Bash instance go to the repository folder and run
+
+```shell
+npm install
+```
+
 ## Running:
 
 In a terminal or Git Bash instance go into the TelloJS repository folder and start the local NodeJS Express server.
