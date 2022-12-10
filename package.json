@@ -10,7 +10,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dgram": "^1.0.1",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "http": "0.0.1-security",
     "http-errors": "~1.6.3",
     "mongoose": "^5.9.18",
